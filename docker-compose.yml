@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb
+    restart: always
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb_data:/data/db
+
+  gateway:
+    build:
+      context: ./gateway
+    container_name: gateway
+    restart: always
+    ports:
+      - '8000:8000'
+    depends_on:
+      - auth
+      - event
+      - mongodb
+  auth:
+    build:
+      context: ./auth
+    container_name: auth
+    restart: always
+    ports:
+      - '8001:8001'
+    depends_on:
+      - mongodb
+
+  event:
+    build:
+      context: ./event
+    container_name: event
+    restart: always
+    ports:
+      - '8002:8002'
+    depends_on:
+      - mongodb
+
+volumes:
+  mongodb_data:

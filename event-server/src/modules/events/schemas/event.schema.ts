@@ -7,6 +7,14 @@ export enum EventStatus {
   INACTIVE = 'INACTIVE',
 }
 
+export enum ConditionType {
+  ATTENDANCE = 'ATTENDANCE',
+}
+
+type AttendanceConditionConfig = {
+  requiredDays: number;
+};
+
 @Schema({ timestamps: true })
 export class Event extends Document {
   @Prop({ required: true })
@@ -21,6 +29,18 @@ export class Event extends Document {
     default: EventStatus.INACTIVE,
   })
   status: EventStatus;
+
+  @Prop({
+    required: true,
+    enum: Object.values(ConditionType),
+  })
+  conditionType: ConditionType;
+
+  @Prop({
+    type: Object,
+    required: true,
+  })
+  config: AttendanceConditionConfig;
 
   @Prop({ required: true })
   startDate: Date;

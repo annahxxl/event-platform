@@ -12,32 +12,42 @@ services:
 
   gateway:
     build:
-      context: ./gateway
+      context: ./gateway-server
     container_name: gateway
     restart: always
     ports:
       - '8000:8000'
+    environment:
+      - PORT=8000
+      - AUTH_SERVICE_URL=http://auth:8001/api
+      - EVENT_SERVICE_URL=http://event:8002/api
     depends_on:
       - auth
       - event
       - mongodb
   auth:
     build:
-      context: ./auth
+      context: ./auth-server
     container_name: auth
     restart: always
     ports:
       - '8001:8001'
+    environment:
+      - PORT=8001
+      - MONGODB_URI=mongodb://mongodb:27017/auth
     depends_on:
       - mongodb
 
   event:
     build:
-      context: ./event
+      context: ./event-server
     container_name: event
     restart: always
     ports:
       - '8002:8002'
+    environment:
+      - PORT=8002
+      - MONGODB_URI=mongodb://mongodb:27017/event
     depends_on:
       - mongodb
 

@@ -3,10 +3,9 @@ import { Document, Schema as MongooseSchema } from 'mongoose';
 import { Reward } from '../../events/schemas/reward.schema';
 
 export enum RewardRequestStatus {
-  PENDING = 'PENDING',
-  APPROVED = 'APPROVED',
-  REJECTED = 'REJECTED',
-  CLAIMED = 'CLAIMED',
+  APPROVED = 'APPROVED', // 승인
+  REJECTED = 'REJECTED', // 거절
+  CLAIMED = 'CLAIMED', // 수령
 }
 
 @Schema({ timestamps: true })
@@ -24,9 +23,11 @@ export class RewardRequest extends Document {
   @Prop({
     type: String,
     enum: Object.values(RewardRequestStatus),
-    default: RewardRequestStatus.PENDING,
   })
   status: RewardRequestStatus;
+
+  @Prop()
+  failureReason: string;
 
   @Prop()
   createdAt: Date;

@@ -54,7 +54,7 @@ export class Event extends Document {
   @Prop()
   updatedAt: Date;
 
-  @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: Reward.name }] })
+  @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Reward' }] })
   rewards: MongooseSchema.Types.ObjectId[];
 }
 

@@ -8,12 +8,14 @@ import {
 } from './schemas/reward-request.schema';
 import { Reward } from '../events/schemas/reward.schema';
 import { RewardSchema } from '../events/schemas/reward.schema';
+import { Attendance, AttendanceSchema } from './schemas/attendance.schema';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: Reward.name, schema: RewardSchema },
       { name: RewardRequest.name, schema: RewardRequestSchema },
+      { name: Attendance.name, schema: AttendanceSchema },
     ]),
   ],
   controllers: [RewardRequestsController],

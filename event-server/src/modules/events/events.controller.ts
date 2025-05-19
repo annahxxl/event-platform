@@ -1,16 +1,16 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { EventsService } from './events.service';
 import { Event } from './schemas/event.schema';
-import { CreateEventDto } from './dtos/create-event.dto';
-import { CreateRewardDto } from './dtos/create-reward.dto';
+import { CreateEventRequestDto } from './dtos/request/create-event.request.dto';
+import { CreateRewardRequestDto } from './dtos/request/create-reward.request.dto';
 
 @Controller('events')
 export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
 
   @Post()
-  async createEvent(@Body() dto: CreateEventDto): Promise<Event> {
-    return this.eventsService.createEvent(dto);
+  async createEvent(@Body() body: CreateEventRequestDto): Promise<Event> {
+    return this.eventsService.createEvent(body);
   }
 
   @Get()
@@ -26,8 +26,8 @@ export class EventsController {
   @Post(':id/rewards')
   async createReward(
     @Param('id') id: string,
-    @Body() dto: CreateRewardDto,
+    @Body() body: CreateRewardRequestDto,
   ): Promise<Event> {
-    return this.eventsService.createReward(id, dto);
+    return this.eventsService.createReward(id, body);
   }
 }

@@ -1,4 +1,4 @@
-export class CreateRewardDto {
+export class CreateRewardRequestDto {
   itemId: string;
   amount: number;
 }

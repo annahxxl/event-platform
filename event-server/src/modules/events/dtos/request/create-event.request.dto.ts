@@ -1,6 +1,6 @@
-import { EventStatus } from '../schemas/event.schema';
+import { EventStatus } from '../../schemas/event.schema';
 
-export class CreateEventDto {
+export class CreateEventRequestDto {
   title: string;
   description?: string;
   status?: EventStatus;

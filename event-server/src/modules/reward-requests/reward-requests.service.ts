@@ -12,6 +12,7 @@ import {
   RewardRequest,
   RewardRequestStatus,
 } from './schemas/reward-request.schema';
+import { CreateRewardRequestRequestDto } from './dtos/request/create-reward-request.request.dto';
 
 @Injectable()
 export class RewardRequestsService {
@@ -23,11 +24,11 @@ export class RewardRequestsService {
   ) {}
 
   async createRewardRequest(
-    rewardId: string,
+    body: CreateRewardRequestRequestDto,
     userId: string,
   ): Promise<RewardRequest> {
     const reward = await this.rewardModel
-      .findById(rewardId)
+      .findById(body.rewardId)
       .populate('event')
       .populate('item');
     if (!reward) {
@@ -57,7 +58,7 @@ export class RewardRequestsService {
     if (event.conditionType === ConditionType.ATTENDANCE) {
       const attendance = await this.attendanceModel.findOne({ userId });
       const requiredDays = event.conditionConfig.requiredDays;
-      isConditionMet = !attendance || attendance.streak >= requiredDays;
+      isConditionMet = !attendance || attendance.streakDays >= requiredDays;
       failureReason = !isConditionMet ? '출석일수 부족' : null;
     }
 
@@ -73,5 +74,9 @@ export class RewardRequestsService {
 
   async getRewardRequests(): Promise<RewardRequest[]> {
     return this.rewardRequestModel.find();
+  }
+
+  async getMyRewardRequests(userId: string): Promise<RewardRequest[]> {
+    return this.rewardRequestModel.find({ userId });
   }
 }

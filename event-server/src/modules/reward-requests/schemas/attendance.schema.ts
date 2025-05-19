@@ -8,7 +8,7 @@ export class Attendance extends Document {
 
   // 연속 출석일수
   @Prop({ required: true, default: 0 })
-  streak: number;
+  streakDays: number;
 
   @Prop({ required: true, default: Date.now })
   lastAttendanceDate: Date;

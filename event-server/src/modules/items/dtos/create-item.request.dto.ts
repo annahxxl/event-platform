@@ -1,4 +1,4 @@
-export class CreateItemDto {
+export class CreateItemRequestDto {
   name: string;
   description: string;
 }

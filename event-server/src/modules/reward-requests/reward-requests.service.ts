@@ -42,6 +42,15 @@ export class RewardRequestsService {
       throw new BadRequestException('Event is not active');
     }
 
+    // 중복 요청인지 검증
+    const existingRequest = await this.rewardRequestModel.findOne({
+      reward: reward._id,
+      userId,
+    });
+    if (existingRequest) {
+      throw new BadRequestException('Duplicate request');
+    }
+
     // 조건 검증
     let isConditionMet = false;
     let failureReason = null;

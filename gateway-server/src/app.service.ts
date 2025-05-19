@@ -14,9 +14,9 @@ export class AppService {
     private readonly configService: ConfigService,
   ) {
     this.authServiceUrl =
-      configService.get('AUTH_SERVICE_URL') || 'http://localhost:8001/api';
+      configService.get('AUTH_SERVICE_URL') || 'http://localhost:8001';
     this.eventServiceUrl =
-      configService.get('EVENT_SERVICE_URL') || 'http://localhost:8002/api';
+      configService.get('EVENT_SERVICE_URL') || 'http://localhost:8002';
   }
 
   checkGatewayHealth(): string {

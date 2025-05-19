@@ -1,20 +1,12 @@
 import { Module } from '@nestjs/common';
-import { HttpModule } from '@nestjs/axios';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard';
+import { RolesGuard } from './modules/auth/guards/roles.guard';
+import { ProxyModule } from './modules/proxy/proxy.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
-  imports: [
-    HttpModule.register({
-      timeout: 5000,
-      maxRedirects: 5,
-    }),
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), ProxyModule, AuthModule],
+  providers: [JwtAuthGuard, RolesGuard],
 })
 export class AppModule {}

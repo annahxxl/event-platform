@@ -19,7 +19,7 @@ export class RewardRequestsProxyController {
   constructor(private readonly proxyService: ProxyService) {}
 
   @Post()
-  @Roles(Role.USER, Role.OPERATOR, Role.ADMIN)
+  @Roles(Role.USER, Role.ADMIN)
   @UseGuards(RolesGuard)
   async createRewardRequest(@Req() req: Request, @Res() res: Response) {
     const { statusCode, data } =
@@ -27,7 +27,7 @@ export class RewardRequestsProxyController {
     res.status(statusCode ?? HttpStatus.OK).json(data);
   }
 
-  @Get('me')
+  @Get('my')
   async getMyRewardRequests(@Req() req: Request, @Res() res: Response) {
     (req as any).query.userId = (req as any).user.userId;
     const { statusCode, data } =

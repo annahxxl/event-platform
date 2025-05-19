@@ -19,8 +19,8 @@ export class EventsController {
   }
 
   @Get(':id')
-  async getEventById(@Param('id') id: string): Promise<Event> {
-    return this.eventsService.getEventById(id);
+  async getEvent(@Param('id') id: string): Promise<Event> {
+    return this.eventsService.getEvent(id);
   }
 
   @Post(':id/rewards')

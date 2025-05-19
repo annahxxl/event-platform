@@ -23,7 +23,7 @@ export class EventsService {
     return this.eventModel.find().populate('rewards');
   }
 
-  async getEventById(id: string): Promise<Event> {
+  async getEvent(id: string): Promise<Event> {
     const event = await this.eventModel.findById(id).populate('rewards');
     if (!event) {
       throw new NotFoundException('Event not found');

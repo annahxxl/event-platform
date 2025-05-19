@@ -28,9 +28,24 @@ export class EventsProxyController {
   }
 
   @Get()
-  @Get(':id')
   @Roles(Role.OPERATOR, Role.ADMIN)
   async getEvents(@Req() req: Request, @Res() res: Response) {
+    const { statusCode, data } =
+      await this.proxyService.proxyToEventService(req);
+    res.status(statusCode ?? HttpStatus.OK).json(data);
+  }
+
+  @Get(':id')
+  @Roles(Role.OPERATOR, Role.ADMIN)
+  async getEvent(@Req() req: Request, @Res() res: Response) {
+    const { statusCode, data } =
+      await this.proxyService.proxyToEventService(req);
+    res.status(statusCode ?? HttpStatus.OK).json(data);
+  }
+
+  @Post(':id/rewards')
+  @Roles(Role.OPERATOR, Role.ADMIN)
+  async createReward(@Req() req: Request, @Res() res: Response) {
     const { statusCode, data } =
       await this.proxyService.proxyToEventService(req);
     res.status(statusCode ?? HttpStatus.OK).json(data);

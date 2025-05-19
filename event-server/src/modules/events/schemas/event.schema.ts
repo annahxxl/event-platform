@@ -10,7 +10,7 @@ export enum ConditionType {
   ATTENDANCE = 'ATTENDANCE',
 }
 
-type AttendanceConditionConfig = {
+export type AttendanceConditionConfig = {
   requiredDays: number;
 };
 

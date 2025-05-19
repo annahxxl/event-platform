@@ -50,6 +50,11 @@ export class ProxyService {
     delete headers['content-length'];
     delete headers['host'];
 
+    if ((req as any).user) {
+      headers['x-user-id'] = (req as any).user.sub;
+      headers['x-user-role'] = (req as any).user.role;
+    }
+
     const response = await firstValueFrom(
       this.httpService.request({
         url,

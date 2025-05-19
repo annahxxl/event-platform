@@ -1,10 +1,11 @@
 import {
   Controller,
-  All,
   Req,
   Res,
   UseGuards,
   HttpStatus,
+  Get,
+  Post,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { ProxyService } from './proxy.service';
@@ -18,8 +19,18 @@ import { Roles, Role } from '../auth/decorators/roles.decorator';
 export class EventsProxyController {
   constructor(private readonly proxyService: ProxyService) {}
 
-  @All('*')
-  async adminOnly(@Req() req: Request, @Res() res: Response) {
+  @Post()
+  @Roles(Role.OPERATOR, Role.ADMIN)
+  async createEvent(@Req() req: Request, @Res() res: Response) {
+    const { statusCode, data } =
+      await this.proxyService.proxyToEventService(req);
+    res.status(statusCode ?? HttpStatus.OK).json(data);
+  }
+
+  @Get()
+  @Get(':id')
+  @Roles(Role.OPERATOR, Role.ADMIN)
+  async getEvents(@Req() req: Request, @Res() res: Response) {
     const { statusCode, data } =
       await this.proxyService.proxyToEventService(req);
     res.status(statusCode ?? HttpStatus.OK).json(data);

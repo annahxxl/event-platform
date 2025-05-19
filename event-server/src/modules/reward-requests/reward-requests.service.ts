@@ -47,7 +47,7 @@ export class RewardRequestsService {
     let failureReason = null;
     if (event.conditionType === ConditionType.ATTENDANCE) {
       const attendance = await this.attendanceModel.findOne({ userId });
-      const requiredDays = event.config.requiredDays;
+      const requiredDays = event.conditionConfig.requiredDays;
       isConditionMet = !attendance || attendance.streak >= requiredDays;
       failureReason = !isConditionMet ? '출석일수 부족' : null;
     }

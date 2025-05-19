@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
-import { Reward } from './reward.schema';
 
 export enum EventStatus {
   ACTIVE = 'ACTIVE',
@@ -40,7 +39,7 @@ export class Event extends Document {
     type: Object,
     required: true,
   })
-  config: AttendanceConditionConfig;
+  conditionConfig: AttendanceConditionConfig;
 
   @Prop({ required: true })
   startDate: Date;
